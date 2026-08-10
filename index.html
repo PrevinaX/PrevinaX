@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MotorGuard AI — Manutenção Preditiva com Inteligência Artificial</title>
+<meta name="description" content="Sistema de previsão de falhas industriais com IA. Monitore motores e componentes rotativos, evite paradas e reduza custos de manutenção.">
+<style>
+  :root {
+    --azul-escuro: #0b1f3a;
+    --azul: #1e5eff;
+    --azul-claro: #e8f0ff;
+    --verde: #10b981;
+    --laranja: #f59e0b;
+    --vermelho: #ef4444;
+    --cinza: #64748b;
+    --cinza-claro: #f8fafc;
+    --branco: #ffffff;
+    --sombra: 0 10px 30px rgba(11,31,58,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--azul-escuro);
+    line-height: 1.6;
+    background: var(--branco);
+  }
+
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+  /* ===== NAV ===== */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.25rem; }
+  .logo-badge {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--azul), #7c3aed);
+    display: grid; place-items: center; color: #fff; font-size: 1.1rem;
+  }
+  nav ul { display: flex; gap: 28px; list-style: none; }
+  nav a { text-decoration: none; color: var(--azul-escuro); font-weight: 500; font-size: 0.95rem; }
+  nav a:hover { color: var(--azul); }
+  .nav-cta {
+    background: var(--azul); color: #fff !important;
+    padding: 10px 20px; border-radius: 8px; font-weight: 600;
+  }
+  .nav-cta:hover { background: #1649cc; }
+  .menu-btn { display: none; background: none; border: none; font-size: 1.6rem; cursor: pointer; }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, var(--azul-escuro) 0%, #123a6b 60%, #1e5eff 100%);
+    color: #fff; padding: 90px 0 80px; text-align: center;
+  }
+  .hero h1 { font-size: 3rem; line-height: 1.15; margin-bottom: 20px; }
+  .hero h1 span { color: #7dd3fc; }
+  .hero p { font-size: 1.2rem; max-width: 720px; margin: 0 auto 32px; color: #dbeafe; }
+  .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 14px 30px; border-radius: 10px;
+    font-weight: 600; text-decoration: none; transition: transform .2s, box-shadow .2s;
+  }
+  .btn-primary { background: #fff; color: var(--azul-escuro); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+  .btn-outline { border: 2px solid rgba(255,255,255,0.6); color: #fff; }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); }
+  .hero-stats { display: flex; gap: 40px; justify-content: center; margin-top: 50px; flex-wrap: wrap; }
+  .stat h3 { font-size: 2rem; color: #7dd3fc; }
+  .stat p { font-size: 0.9rem; color: #cbd5e1; margin: 0; }
+
+  /* ===== SEÇÕES ===== */
+  section { padding: 80px 0; }
+  .section-tag {
+    display: inline-block; background: var(--azul-claro); color: var(--azul);
+    padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;
+    margin-bottom: 16px;
+  }
+  h2 { font-size: 2.2rem; margin-bottom: 16px; line-height: 1.2; }
+  .subtitle { color: var(--cinza); max-width: 640px; margin-bottom: 40px; }
+
+  /* Problema */
+  .problema { background: var(--cinza-claro); }
+  .problema-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .problema-card {
+    background: #fff; border-radius: 14px; padding: 24px; box-shadow: var(--sombra);
+    border-top: 4px solid var(--vermelho);
+  }
+  .problema-card .icon { font-size: 1.8rem; margin-bottom: 10px; }
+  .problema-card h3 { font-size: 1.05rem; margin-bottom: 8px; }
+
+  /* Solução */
+  .solucao-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .solucao-card {
+    background: #fff; border-radius: 16px; padding: 28px; box-shadow: var(--sombra);
+    border: 1px solid #e2e8f0; transition: transform .2s;
+  }
+  .solucao-card:hover { transform: translateY(-4px); }
+  .solucao-card .icon {
+    width: 52px; height: 52px; border-radius: 12px; display: grid; place-items: center;
+    font-size: 1.5rem; margin-bottom: 16px; background: var(--azul-claro);
+  }
+  .solucao-card h3 { margin-bottom: 10px; }
+  .solucao-card p { color: var(--cinza); font-size: 0.95rem; }
+
+  /* Alerta exemplo */
+  .alerta {
+    background: var(--azul-escuro); color: #fff; border-radius: 16px; padding: 28px;
+    margin-top: 40px; border-left: 6px solid var(--laranja);
+  }
+  .alerta h4 { color: var(--laranja); margin-bottom: 12px; font-size: 0.9rem; letter-spacing: 1px; }
+  .alerta p { font-size: 1.05rem; }
+  .alerta .prob { color: #7dd3fc; font-weight: 700; }
+
+  /* Diferencial */
+  .diferencial { background: linear-gradient(135deg, #f0fdf4, #ecfdf5); }
+  .diferencial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .dif-item { background: #fff; border-radius: 14px; padding: 24px; text-align: center; box-shadow: var(--sombra); }
+  .dif-item .icon { font-size: 2rem; margin-bottom: 10px; }
+  .dif-item h4 { color: var(--verde); margin-bottom: 6px; }
+
+  /* Público */
+  .publico-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+  .publico-item {
+    background: var(--cinza-claro); border-radius: 10px; padding: 16px 20px;
+    display: flex; align-items: center; gap: 12px; font-weight: 500;
+  }
+  .publico-item span { color: var(--verde); font-size: 1.2rem; }
+
+  /* Planos */
+  .planos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; align-items: start; }
+  .plano {
+    background: #fff; border-radius: 16px; padding: 32px; box-shadow: var(--sombra);
+    border: 1px solid #e2e8f0; display: flex; flex-direction: column;
+  }
+  .plano.destaque {
+    border: 2px solid var(--azul); transform: scale(1.03);
+    box-shadow: 0 20px 40px rgba(30,94,255,0.15);
+  }
+  .plano h3 { font-size: 1.3rem; margin-bottom: 6px; }
+  .plano .preco { font-size: 2rem; font-weight: 700; color: var(--azul); margin: 12px 0; }
+  .plano .preco small { font-size: 0.9rem; color: var(--cinza); font-weight: 400; }
+  .plano ul { list-style: none; margin: 16px 0 24px; flex: 1; }
+  .plano li { padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: var(--cinza); font-size: 0.95rem; }
+  .plano li::before { content: "✓ "; color: var(--verde); font-weight: 700; }
+  .plano .btn { text-align: center; }
+  .btn-plano { background: var(--azul); color: #fff; }
+  .btn-plano:hover { background: #1649cc; }
+  .plano.destaque .btn-plano { background: var(--azul-escuro); }
+
+  /* CTA final */
+  .cta-final {
+    background: linear-gradient(135deg, var(--azul-escuro), #1e5eff);
+    color: #fff; text-align: center; padding: 80px 0;
+  }
+  .cta-final h2 { color: #fff; }
+  .cta-final p { color: #dbeafe; margin-bottom: 32px; }
+
+  /* Footer */
+  footer { background: var(--azul-escuro); color: #94a3b8; padding: 40px 0; text-align: center; font-size: 0.9rem; }
+  footer .logo { justify-content: center; color: #fff; margin-bottom: 12px; }
+
+  /* Responsivo */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 2.1rem; }
+    nav ul {
+      display: none; position: absolute; top: 72px; left: 0; right: 0;
+      background: #fff; flex-direction: column; padding: 20px; gap: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    nav ul.aberto { display: flex; }
+    .menu-btn { display: block; }
+    .plano.destaque { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== NAVEGAÇÃO ===== -->
+<header>
+  <div class="container nav">
+    <div class="logo"><span class="logo-badge">⚙️</span> MotorGuard AI</div>
+    <nav>
+      <ul id="menu">
+        <li><a href="#problema">Problema</a></li>
+        <li><a href="#solucao">Solução</a></li>
+        <li><a href="#diferencial">Diferencial</a></li>
+        <li><a href="#publico">Público</a></li>
+        <li><a href="#planos">Planos</a></li>
+        <li><a href="#contato" class="nav-cta">Solicitar Demo</a></li>
+      </ul>
+    </nav>
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container">
+    <h1>Preveja falhas antes que <span>sua produção pare</span></h1>
+    <p>O MotorGuard AI usa sensores de baixo custo e inteligência artificial para monitorar motores e componentes rotativos, avisando com antecedência quando uma máquina precisa de manutenção.</p>
+    <div class="hero-btns">
+      <a href="#planos" class="btn btn-primary">Ver Planos</a>
+      <a href="#solucao" class="btn btn-outline">Como Funciona</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><h3>-40%</h3><p>custos de manutenção</p></div>
+      <div class="stat"><h3>-70%</h3><p>paradas não programadas</p></div>
+      <div class="stat"><h3>+30%</h3><p>vida útil dos motores</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROBLEMA ===== -->
+<section class="problema" id="problema">
+  <div class="container">
+    <span class="section-tag">O Problema</span>
+    <h2>Manutenção tradicional não prevê falhas</h2>
+    <p class="subtitle">Pequenas e médias indústrias ainda dependem de manutenção corretiva ou preventiva tradicional, que não conseguem prever falhas nos equipamentos.</p>
+    <div class="problema-grid">
+      <div class="problema-card"><div class="icon">⏱️</div><h3>Paradas inesperadas</h3><p>Produção interrompida sem aviso, gerando atrasos e prejuízos.</p></div>
+      <div class="problema-card"><div class="icon">💰</div><h3>Custos elevados</h3><p>Reparos emergenciais e troca de peças custam muito mais caro.</p></div>
+      <div class="problema-card"><div class="icon">📉</div><h3>Menor produtividade</h3><p>Equipamentos parados significam perda de matéria-prima e de receita.</p></div>
+      <div class="problema-card"><div class="icon">⚠️</div><h3>Risco de acidentes</h3><p>Falhas não detectadas aumentam o risco para os operadores.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SOLUÇÃO ===== -->
+<section id="solucao">
+  <div class="container">
+    <span class="section-tag">A Solução</span>
+    <h2>Como o MotorGuard AI funciona</h2>
+    <p class="subtitle">Monitoramento contínuo + inteligência artificial para transformar dados em decisões de manutenção.</p>
+    <div class="solucao-grid">
+      <div class="solucao-card">
+        <div class="icon">📡</div>
+        <h3>Monitoramento Inteligente</h3>
+        <p>Sensores simples instalados nos motores captam vibração, temperatura, corrente elétrica, ruído e rotação em tempo real.</p>
+      </div>
+      <div class="solucao-card">
+        <div class="icon">🧠</div>
+        <h3>IA para Prever Falhas</h3>
+        <p>O sistema aprende o comportamento normal da máquina e identifica desgaste de rolamento, desalinhamento, falta de lubrificação, superaquecimento e desequilíbrio do rotor.</p>
+      </div>
+      <div class="solucao-card">
+        <div class="icon">🔄</div>
+        <h3>Gêmeo Digital</h3>
+        <p>Uma representação virtual de cada equipamento com histórico de funcionamento, idade das peças, manutenções realizadas e previsão de vida útil.</p>
+      </div>
+      <div class="solucao-card">
+        <div class="icon">💬</div>
+        <h3>Assistente Técnico com IA</h3>
+        <p>O operador conversa com o sistema e recebe diagnósticos claros. Ex.: "Por que o motor da esteira está aquecendo?" — o sistema aponta as causas mais prováveis.</p>
+      </div>
+      <div class="solucao-card">
+        <div class="icon">📊</div>
+        <h3>Sistema de Economia</h3>
+        <p>Calcula custo de parada, custo de manutenção preventiva e o melhor momento para substituir cada peça, otimizando o orçamento.</p>
+      </div>
+      <div class="solucao-card">
+        <div class="icon">🔔</div>
+        <h3>Alertas Antecipados</h3>
+        <p>Receba avisos com dias de antecedência e probabilidade de falha, permitindo uma manutenção planejada e sem interrupções.</p>
+      </div>
+    </div>
+
+    <!-- Exemplo de alerta -->
+    <div class="alerta">
+      <h4>🔔 EXEMPLO DE ALERTA GERADO PELO SISTEMA</h4>
+      <p>"Motor da bomba 03 apresenta aumento de vibração de 18% nas últimas duas semanas. <span class="prob">Probabilidade de falha do rolamento: 82%.</span> Recomenda-se inspeção em até 10 dias."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DIFERENCIAL ===== -->
+<section class="diferencial" id="diferencial">
+  <div class="container">
+    <span class="section-tag">Diferencial Inovador</span>
+    <h2>Acessível para pequenas indústrias</h2>
+    <p class="subtitle">Ao contrário de sistemas caros, o MotorGuard AI funciona sem exigir equipamentos de alto custo.</p>
+    <div class="diferencial-grid">
+      <div class="dif-item"><div class="icon">🔌</div><h4>Sensores de baixo custo</h4><p>Instalação simples e acessível</p></div>
+      <div class="dif-item"><div class="icon">📱</div><h4>Celular ou tablet</h4><p>Coleta de dados sem infraestrutura</p></div>
+      <div class="dif-item"><div class="icon">☁️</div><h4>IA na nuvem</h4><p>Sem servidores próprios</p></div>
+      <div class="dif-item"><div class="icon">🛠️</div><h4>Instalação simples</h4><p>Sem parar a produção</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PÚBLICO ===== -->
+<section id="publico">
+  <div class="container">
+    <span class="section-tag">Público-Alvo</span>
+    <h2>Para quem é o MotorGuard AI</h2>
+    <p class="subtitle">Indústrias que dependem de motores e componentes rotativos e querem evitar paradas.</p>
+    <div class="publico-list">
+      <div class="publico-item"><span>🏭</span> Pequenas metalúrgicas</div>
+      <div class="publico-item"><span>🥫</span> Fábricas de alimentos</div>
+      <div class="publico-item"><span>🧵</span> Indústrias têxteis</div>
+      <div class="publico-item"><span>♻️</span> Empresas de plástico</div>
+      <div class="publico-item"><span>🔧</span> Oficinas industriais</div>
+      <div class="publico-item"><span>🛠️</span> Empresas de manutenção</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PLANOS ===== -->
+<section id="planos">
+  <div class="container">
+    <span class="section-tag">Planos</span>
+    <h2>Escolha o plano ideal</h2>
+    <p class="subtitle">Comece pequeno e evolua conforme sua operação cresce.</p>
+    <div class="planos-grid">
+      <div class="plano">
+        <h3>Básico</h3>
+        <p class="preco">Sob consulta<small> / mês</small></p>
+        <ul>
+          <li>Monitoramento de até 5 máquinas</li>
+          <li>Alertas de anomalias</li>
+          <li>Painel de acompanhamento</li>
+          <li>Suporte por e-mail</li>
+        </ul>
+        <a href="#contato" class="btn btn-plano">Começar Agora</a>
+      </div>
+      <div class="plano destaque">
+        <h3>Profissional</h3>
+        <p class="preco">Sob consulta<small> / mês</small></p>
+        <ul>
+          <li>Tudo do Básico, mais:</li>
+          <li>IA de previsão de falhas</li>
+          <li>Relatórios detalhados</li>
+          <li>Alertas inteligentes com probabilidade</li>
+          <li>Assistente técnico com IA</li>
+          <li>Suporte prioritário</li>
+        </ul>
+        <a href="#contato" class="btn btn-plano">Mais Popular</a>
+      </div>
+      <div class="plano">
+        <h3>Empresarial</h3>
+        <p class="preco">Sob consulta<small> / mês</small></p>
+        <ul>
+          <li>Tudo do Profissional, mais:</li>
+          <li>Máquinas ilimitadas</li>
+          <li>Integração com sistemas industriais</li>
+          <li>Gêmeo digital completo</li>
+          <li>Gerente de conta dedicado</li>
+          <li>Implantação assistida</li>
+        </ul>
+        <a href="#contato" class="btn btn-plano">Falar com Vendas</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA FINAL ===== -->
+<section class="cta-final" id="contato">
+  <div class="container">
+    <h2>Pronto para acabar com as paradas inesperadas?</h2>
+    <p>Solicite uma demonstração gratuita e veja como o MotorGuard AI pode proteger seus equipamentos.</p>
+    <a href="mailto:contato@motorguardai.com.br" class="btn btn-primary">Solicitar Demonstração</a>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="logo"><span class="logo-badge">⚙️</span> MotorGuard AI</div>
+    <p>Manutenção preditiva com inteligência artificial para a indústria.</p>
+    <p style="margin-top:8px;">© 2026 MotorGuard AI. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script>
+  // Menu mobile
+  function toggleMenu() {
+    document.getElementById('menu').classList.toggle('aberto');
+  }
+
+  // Fechar menu ao clicar em um link (mobile)
+  document.querySelectorAll('#menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('menu').classList.remove('aberto');
+    });
+  });
+
+  // Rolagem suave para âncoras
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
