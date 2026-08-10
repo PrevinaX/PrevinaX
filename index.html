@@ -154,6 +154,69 @@
   .btn-plano:hover { background: #1649cc; }
   .plano.destaque .btn-plano { background: var(--azul-escuro); }
 
+  /* ===== DASHBOARD ===== */
+  .dashboard { background: #0b1526; color: #e2e8f0; padding: 80px 0; }
+  .dashboard .section-tag { background: rgba(30,94,255,0.15); color: #7dd3fc; }
+  .dashboard h2 { color: #fff; }
+  .dashboard .subtitle { color: #94a3b8; }
+
+  .dash-topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    background: #0f1f38; border: 1px solid #1e3a5f; border-radius: 12px;
+    padding: 12px 20px; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+  }
+  .dash-topbar nav { display: flex; gap: 18px; flex-wrap: wrap; }
+  .dash-topbar nav a { color: #94a3b8; text-decoration: none; font-size: .9rem; }
+  .dash-topbar nav a:hover, .dash-topbar nav a.ativo { color: #7dd3fc; }
+  .dash-status { display: flex; align-items: center; gap: 8px; font-size: .85rem; color: #94a3b8; }
+  .ponto { width: 8px; height: 8px; border-radius: 50%; background: #10b981; }
+
+  .dash-grid { display: grid; grid-template-columns: 1fr 340px; gap: 24px; }
+  @media (max-width: 980px) { .dash-grid { grid-template-columns: 1fr; } }
+
+  .dash-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+  @media (max-width: 760px) { .dash-cards { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .dash-cards { grid-template-columns: 1fr; } }
+
+  .maquina { background: #0f1f38; border: 1px solid #1e3a5f; border-radius: 12px; padding: 16px; }
+  .maquina .nome { display: flex; justify-content: space-between; font-weight: 600; color: #fff; }
+  .maquina .saude { color: #10b981; font-size: .85rem; }
+  .maquina .barra { height: 6px; background: #1e3a5f; border-radius: 3px; margin: 10px 0 12px; overflow: hidden; }
+  .maquina .barra i { display: block; height: 100%; border-radius: 3px; background: linear-gradient(90deg, #10b981, #34d399); }
+  .maquina ul { list-style: none; font-size: .82rem; }
+  .maquina li { display: flex; justify-content: space-between; padding: 3px 0; color: #94a3b8; }
+  .ok { color: #10b981; font-weight: 600; }
+  .atencao { color: #f59e0b; font-weight: 600; }
+
+  .grafico-box { background: #0f1f38; border: 1px solid #1e3a5f; border-radius: 12px; padding: 20px; }
+  .grafico-box h4 { color: #fff; margin-bottom: 4px; }
+  .grafico-box .sub-graf { font-size: .82rem; color: #64748b; margin-bottom: 12px; }
+  .graf-svg { width: 100%; height: auto; display: block; }
+  .graf-meta { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 12px; font-size: .85rem; color: #94a3b8; }
+  .graf-meta strong { color: #fff; }
+  .alto { color: #ef4444; font-weight: 700; }
+
+  .painel { background: #0f1f38; border: 1px solid #1e3a5f; border-radius: 12px; padding: 20px; margin-bottom: 24px; }
+  .painel h4 { color: #fff; margin-bottom: 14px; font-size: 1rem; display: flex; justify-content: space-between; align-items: center; }
+  .painel h4 a { color: #7dd3fc; font-size: .8rem; text-decoration: none; }
+  .alerta { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid #16294a; }
+  .alerta:last-child { border-bottom: none; }
+  .alerta .ic { width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center; flex-shrink: 0; font-size: 1rem; }
+  .ic-alto { background: rgba(239,68,68,.15); }
+  .ic-medio { background: rgba(245,158,11,.15); }
+  .ic-baixo { background: rgba(16,185,129,.15); }
+  .alerta p { font-size: .85rem; color: #cbd5e1; }
+  .alerta .risco { display: inline-block; font-size: .7rem; padding: 2px 8px; border-radius: 10px; margin-top: 4px; font-weight: 600; }
+  .r-alto { background: rgba(239,68,68,.15); color: #f87171; }
+  .r-medio { background: rgba(245,158,11,.15); color: #fbbf24; }
+  .r-baixo { background: rgba(16,185,129,.15); color: #34d399; }
+
+  .gemeo ul { list-style: none; font-size: .88rem; }
+  .gemeo li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #16294a; color: #94a3b8; }
+  .gemeo li:last-child { border-bottom: none; }
+  .gemeo li strong { color: #e2e8f0; font-weight: 500; }
+  .vida { color: #34d399; font-weight: 700; }
+
   /* CTA final */
   .cta-final {
     background: linear-gradient(135deg, var(--azul-escuro), #1e5eff);
@@ -193,6 +256,7 @@
         <li><a href="#diferencial">Diferencial</a></li>
         <li><a href="#publico">Público</a></li>
         <li><a href="#planos">Planos</a></li>
+        <li><a href="#dashboard">Dashboard</a></li>
         <li><a href="#contato" class="nav-cta">Solicitar Demo</a></li>
       </ul>
     </nav>
@@ -355,6 +419,139 @@
         </ul>
         <a href="#contato" class="btn btn-plano">Falar com Vendas</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DASHBOARD ===== -->
+<section class="dashboard" id="dashboard">
+  <div class="container">
+    <span class="section-tag">Produto</span>
+    <h2>Veja o painel em ação</h2>
+    <p class="subtitle">Monitore a saúde de todas as máquinas em um só lugar, com alertas antecipados e gêmeo digital de cada equipamento.</p>
+
+    <div class="dash-topbar">
+      <nav>
+        <a href="#dashboard" class="ativo">Visão Geral</a>
+        <a href="#dashboard">Máquinas</a>
+        <a href="#dashboard">Análises</a>
+        <a href="#dashboard">Alertas</a>
+        <a href="#dashboard">Relatórios</a>
+        <a href="#dashboard">Configurações</a>
+      </nav>
+      <div class="dash-status"><span class="ponto"></span> Sistema Operacional · 24/05/2024 10:42:15</div>
+    </div>
+
+    <div class="dash-grid">
+      <div>
+        <div class="dash-cards">
+          <div class="maquina">
+            <div class="nome">Motor 01 <span class="saude">94%</span></div>
+            <div class="barra"><i style="width:94%"></i></div>
+            <ul>
+              <li>Temperatura <span class="ok">OK</span></li>
+              <li>Vibração <span class="atencao">Atenção</span></li>
+              <li>Corrente <span class="ok">OK</span></li>
+            </ul>
+          </div>
+          <div class="maquina">
+            <div class="nome">Motor 04 <span class="saude">92%</span></div>
+            <div class="barra"><i style="width:92%"></i></div>
+            <ul>
+              <li>Temperatura <span class="ok">OK</span></li>
+              <li>Vibração <span class="ok">OK</span></li>
+              <li>Corrente <span class="ok">OK</span></li>
+            </ul>
+          </div>
+          <div class="maquina">
+            <div class="nome">Bomba 2 <span class="saude">88%</span></div>
+            <div class="barra"><i style="width:88%"></i></div>
+            <ul>
+              <li>Temperatura <span class="ok">OK</span></li>
+              <li>Vibração <span class="ok">OK</span></li>
+              <li>Corrente <span class="atencao">Atenção</span></li>
+            </ul>
+          </div>
+          <div class="maquina">
+            <div class="nome">Compressor 3 <span class="saude">76%</span></div>
+            <div class="barra"><i style="width:76%"></i></div>
+            <ul>
+              <li>Temperatura <span class="atencao">Atenção</span></li>
+              <li>Vibração <span class="atencao">Atenção</span></li>
+              <li>Corrente <span class="ok">OK</span></li>
+            </ul>
+          </div>
+          <div class="maquina">
+            <div class="nome">Bomba 5 <span class="saude">85%</span></div>
+            <div class="barra"><i style="width:85%"></i></div>
+            <ul>
+              <li>Temperatura <span class="ok">OK</span></li>
+              <li>Vibração <span class="ok">OK</span></li>
+              <li>Corrente <span class="ok">OK</span></li>
+            </ul>
+          </div>
+          <div class="maquina">
+            <div class="nome">Ventilador 6 <span class="saude">90%</span></div>
+            <div class="barra"><i style="width:90%"></i></div>
+            <ul>
+              <li>Temperatura <span class="ok">OK</span></li>
+              <li>Vibração <span class="ok">OK</span></li>
+              <li>Corrente <span class="ok">OK</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="grafico-box">
+          <h4>Vibração (mm/s) — Motor 01</h4>
+          <p class="sub-graf">Últimas 24 horas · Faixa normal destacada</p>
+          <svg class="graf-svg" viewBox="0 0 600 220" role="img" aria-label="Gráfico de vibração do Motor 01">
+            <rect x="0" y="50" width="600" height="60" fill="rgba(16,185,129,0.10)"/>
+            <line x1="0" y1="50" x2="600" y2="50" stroke="#334155" stroke-dasharray="4 4"/>
+            <line x1="0" y1="110" x2="600" y2="110" stroke="#334155" stroke-dasharray="4 4"/>
+            <line x1="0" y1="170" x2="600" y2="170" stroke="#334155" stroke-dasharray="4 4"/>
+            <polyline points="0,85 50,80 100,88 150,78 200,84 250,82 300,88 350,80 400,86 450,82 500,84 520,95" fill="none" stroke="#10b981" stroke-width="2.5"/>
+            <polyline points="520,95 540,130 560,175 580,205 600,215" fill="none" stroke="#ef4444" stroke-width="2.5"/>
+          </svg>
+          <div class="graf-meta">
+            <span>Valor atual: <strong>8,7 mm/s</strong></span>
+            <span>Faixa normal: <strong>0 – 4,0 mm/s</strong></span>
+            <span>Status: <strong class="alto">Alto</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="painel">
+          <h4>Alertas Recentes <a href="#dashboard">Ver todos</a></h4>
+          <div class="alerta">
+            <span class="ic ic-alto">🚨</span>
+            <p>Anomalia detectada — Motor 01 <span class="risco r-alto">Risco: Alto</span><br><small>24/05/2024 10:41</small></p>
+          </div>
+          <div class="alerta">
+            <span class="ic ic-medio">⚠️</span>
+            <p>Vibração elevada — Compressor 3 <span class="risco r-medio">Risco: Médio</span><br><small>24/05/2024 10:32</small></p>
+          </div>
+          <div class="alerta">
+            <span class="ic ic-medio">🌡️</span>
+            <p>Temperatura acima do normal — Bomba 5 <span class="risco r-medio">Risco: Médio</span><br><small>24/05/2024 09:58</small></p>
+          </div>
+          <div class="alerta">
+            <span class="ic ic-baixo">🔧</span>
+            <p>Manutenção programada — Motor 04 <span class="risco r-baixo">Risco: Baixo</span><br><small>24/05/2024 08:15</small></p>
+          </div>
+        </div>
+
+        <div class="painel gemeo">
+          <h4>Gêmeo Digital — Motor 01</h4>
+          <ul>
+            <li>Modelo <strong>WEG W22 Premium</strong></li>
+            <li>Potência <strong>75 kW</strong></li>
+            <li>Horas de operação <strong>15.230 h</strong></li>
+            <li>Última troca <strong>24/03/2023 (14 meses)</strong></li>
+            <li>Vida útil restante <strong class="vida">18 meses</strong></li>
+          </ul>
+        </div>
+      </aside>
     </div>
   </div>
 </section>
